@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Multi Section Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 20px;
+    }
+    section {
+      background: white;
+      max-width: 400px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .success {
+      color: green;
+      margin-top: -10px;
+      margin-bottom: 15px;
+    }
+    .error {
+      color: red;
+      margin-bottom: 15px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      padding: 8px 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .form-errors {
+      color: red;
+      font-size: 0.9em;
+      margin-top: -10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Registration Section -->
+  <section>
+    <h2>Register</h2>
+    <form method="POST" action="/">
+      {{ registration_form.hidden_tag() }}
+      {{ registration_form.username.label }}<br>
+      {{ registration_form.username(size=32) }}<br>
+      {% for error in registration_form.username.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      {{ registration_form.password.label }}<br>
+      {{ registration_form.password(size=32) }}<br>
+      {% for error in registration_form.password.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      {{ registration_form.confirm.label }}<br>
+      {{ registration_form.confirm(size=32) }}<br>
+      {% for error in registration_form.confirm.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      <button type="submit">Register</button>
+    </form>
+    {% if registration_error %}
+      <p class="error">{{ registration_error }}</p>
+    {% endif %}
+  </section>
+
+  <!-- Login Section -->
+  <section>
+    <h2>Login</h2>
+    <form method="POST" action="/">
+      {{ login_form.hidden_tag() }}
+      {{ login_form.username.label }}<br>
+      {{ login_form.username(size=32) }}<br>
+      {% for error in login_form.username.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      {{ login_form.password.label }}<br>
+      {{ login_form.password(size=32) }}<br>
+      {% for error in login_form.password.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      <button type="submit">Login</button>
+    </form>
+    {% if login_error %}
+      <p class="error">{{ login_error }}</p>
+    {% endif %}
+  </section>
+
+  <!-- Add Contact Section -->
+  <section>
+    <h2>Add Contact</h2>
+    <form method="POST" action="/">
+      {{ add_contact_form.hidden_tag() }}
+      {{ add_contact_form.name.label }}<br>
+      {{ add_contact_form.name(size=32) }}<br>
+      {% for error in add_contact_form.name.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      {{ add_contact_form.email.label }}<br>
+      {{ add_contact_form.email(size=32) }}<br>
+      {% for error in add_contact_form.email.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      {{ add_contact_form.phone.label }}<br>
+      {{ add_contact_form.phone(size=32) }}<br>
+      {% for error in add_contact_form.phone.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      <button type="submit">Add Contact</button>
+    </form>
+    {% if add_contact_success %}
+      <p class="success">Contact added successfully!</p>
+    {% endif %}
+  </section>
+
+  <!-- Contact Us Section -->
+  <section>
+    <h2>Contact Us</h2>
+    <form method="POST" action="/">
+      {{ contact_us_form.hidden_tag() }}
+      {{ contact_us_form.name.label }}<br>
+      {{ contact_us_form.name(size=32) }}<br>
+      {% for error in contact_us_form.name.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      {{ contact_us_form.email.label }}<br>
+      {{ contact_us_form.email(size=32) }}<br>
+      {% for error in contact_us_form.email.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      {{ contact_us_form.message.label }}<br>
+      {{ contact_us_form.message(rows=4, cols=32) }}<br>
+      {% for error in contact_us_form.message.errors %}
+        <span class="form-errors">{{ error }}</span><br>
+      {% endfor %}
+      <button type="submit">Submit</button>
+    </form>
+    {% if contact_us_success %}
+      <p class="success">Message sent successfully!</p>
+    {% endif %}
+  </section>
+
+  <!-- All Contacts Section -->
+  <section>
+    <h2>All Contacts</h2>
+    {% if contacts %}
+    <table>
+      <thead>
+        <tr><th>Name</th><th>Email</th><th>Phone</th></tr>
+      </thead>
+      <tbody>
+        {% for contact in contacts %}
+          <tr>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.email }}</td>
+            <td>{{ contact.phone or '—' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No contacts added yet.</p>
+    {% endif %}
+  </section>
+
+</body>
+</html>
